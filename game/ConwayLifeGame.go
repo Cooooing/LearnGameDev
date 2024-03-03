@@ -28,7 +28,7 @@ var cellHeight int32 = 8
 var cellStatus []int
 
 const NANOSECOND = 1000000000 // 纳秒 10^9
-const FRAMERATE = 30          // 帧速率 每秒钟刷新的图片的帧数
+const FRAMERATE = 60          // 帧速率 每秒钟刷新的图片的帧数
 const TITLE = "Conway's Game of Life"
 
 var window *sdl.Window
@@ -160,7 +160,7 @@ var widthNumber = width / cellWidth
 
 func initCell() {
 	totalNumber = width * height / cellHeight / cellWidth
-	number = totalNumber / 10
+	number = totalNumber / 16
 	cellStatus = make([]int, totalNumber)
 
 	// 初始化 cellStatus
@@ -211,15 +211,23 @@ func updateCell() {
 			count = count + 1
 		}
 		// 更新细胞状态
-		newCellMap := make([]int, totalNumber)
-		copy(newCellMap, cellStatus)
-		if cellStatus[i] == 1 && (count < 2 || count > 3) {
-			newCellMap[i] = 0
+		newCellStatus := make([]int, totalNumber)
+		//copy(newCellStatus, cellStatus)
+
+		if cellStatus[i] == 1 {
+			if count < 2 || count > 3 {
+				newCellStatus[i] = 0
+			} else {
+				newCellStatus[i] = 1
+			}
+		} else if cellStatus[i] == 0 {
+			if count == 3 {
+				newCellStatus[i] = 1
+			} else {
+				newCellStatus[i] = 0
+			}
 		}
-		if cellStatus[i] == 0 && count == 3 {
-			newCellMap[i] = 1
-		}
-		cellStatus = newCellMap
+		cellStatus[i] = newCellStatus[i]
 
 	}
 }
