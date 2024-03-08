@@ -13,10 +13,10 @@ var Framerate = 60            // 帧速率 每秒钟刷新的图片的帧数
 var Title = "Game Dev"
 var Fps float64
 var Width int32 = 960
-var Height int32 = 600
+var Height int32 = 640
 
-var Running = false
 var IsPause = false
+var NextGame = "Home"
 
 var ShowGame Game
 var GameList = make(map[string]Game, 10)
