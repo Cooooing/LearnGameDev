@@ -66,7 +66,7 @@ func (g *Home) Run() {
 		if global.NextGame != "Home" {
 			global.GameList[global.NextGame].Start()
 		}
-		fmt.Println("home ")
+		//fmt.Println("home ")
 	}
 	g.Cleanup()
 }

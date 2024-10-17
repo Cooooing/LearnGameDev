@@ -23,9 +23,10 @@ type ConwayLifeGame struct {
 	title     string
 	isRunning bool
 
-	cellWidth  int32
-	cellHeight int32
-	cellStatus []int
+	cellWidth     int32
+	cellHeight    int32
+	cellStatus    []int
+	newCellStatus []int
 
 	totalNumber int32
 	number      int32
@@ -33,7 +34,7 @@ type ConwayLifeGame struct {
 }
 
 func NewConwayLifeGame() *ConwayLifeGame {
-	return &ConwayLifeGame{title: "ConwayLifeGame", isRunning: false, cellWidth: 8, cellHeight: 8}
+	return &ConwayLifeGame{title: "ConwayLifeGame", isRunning: false, cellWidth: 4, cellHeight: 4}
 }
 
 func (g *ConwayLifeGame) Start() {
@@ -145,6 +146,7 @@ func (g *ConwayLifeGame) initCell() {
 	g.totalNumber = global.Width * global.Height / g.cellHeight / g.cellWidth
 	g.number = g.totalNumber / 16
 	g.cellStatus = make([]int, g.totalNumber)
+	g.newCellStatus = make([]int, g.totalNumber)
 	// 初始化 g.cellStatus
 	var i int32
 	for i = 0; i < g.totalNumber; i++ {
@@ -193,23 +195,22 @@ func (g *ConwayLifeGame) updateCell() {
 			count = count + 1
 		}
 		// 更新细胞状态
-		newCellStatus := make([]int, g.totalNumber)
-		//copy(newCellStatus, g.cellStatus)
 
 		if g.cellStatus[i] == 1 {
 			if count < 2 || count > 3 {
-				newCellStatus[i] = 0
+				g.newCellStatus[i] = 0
 			} else {
-				newCellStatus[i] = 1
+				g.newCellStatus[i] = 1
 			}
 		} else if g.cellStatus[i] == 0 {
 			if count == 3 {
-				newCellStatus[i] = 1
+				g.newCellStatus[i] = 1
 			} else {
-				newCellStatus[i] = 0
+				g.newCellStatus[i] = 0
 			}
 		}
-		g.cellStatus[i] = newCellStatus[i]
+		g.cellStatus[i] = g.newCellStatus[i]
 
 	}
+	g.cellStatus, g.newCellStatus = g.newCellStatus, g.cellStatus
 }

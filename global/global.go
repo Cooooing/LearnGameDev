@@ -8,7 +8,7 @@ var Window *sdl.Window
 var Renderer *sdl.Renderer
 
 const NANOSECOND = 1000000000 // 纳秒 10^9
-var Framerate = 60            // 帧速率 每秒钟刷新的图片的帧数
+var Framerate = 1000          // 帧速率 每秒钟刷新的图片的帧数
 
 var Title = "Game Dev"
 var Fps float64
